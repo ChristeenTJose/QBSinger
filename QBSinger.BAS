@@ -11,8 +11,9 @@ PRINT "      /  / \  \  |    |  _/ \_____  \ |  | /    \   / ___\ _/ __ \ \_  __
 PRINT "     /   \_/.  \ |    |   \ /        \|  ||   |  \ / /_/  >\  ___/  |  | \/  "
 PRINT "     \_____\ \_/ |______  //_______  /|__||___|  / \___  /  \___  > |__|     "
 PRINT "            \__>        \/         \/          \/ /_____/       \/           "
-COLOR 23
-PRINT "I can sing Twinkle Twinkle Little Star & Jingle Bells!"
+COLOR 7
+LOCATE 8, 11
+PRINT "I can sing 'Twinkle Twinkle Little Star' & 'Jingle Bells!'"
 PRINT
 GOTO 10
 
@@ -21,41 +22,52 @@ COLOR 15
 LOCATE 10, 25
 PRINT "1. Twinkle Twinkle Little Star"
 COLOR 15, 3
-LOCATE 11, 19
-PRINT "                                           "
-LOCATE 12, 19
-PRINT "      C    C    G    G    A    A    G      "
-LOCATE 13, 19
-PRINT "                                           "
-LOCATE 14, 19
-PRINT "      F    F    E    E    D    D    C      "
-LOCATE 15, 19
-PRINT "                                           "
-LOCATE 16, 19
-PRINT "      G    G    F    F    E    E    D      "
-LOCATE 17, 19
-PRINT "                                           "
-LOCATE 18, 19
-PRINT "      G    G    F    F    E    E    D      "
-LOCATE 19, 19
-PRINT "                                           "
-LOCATE 20, 19
-PRINT "      C    C    G    G    A    A    G      "
-LOCATE 21, 19
-PRINT "                                           "
-LOCATE 22, 19
-PRINT "      F    F    E    E    D    D    C      "
-LOCATE 23, 19
-PRINT "                                           "
-PLAY "CCGGAAGP24"
-PLAY "FFEEDDCP24"
-PLAY "GGFFEEDP24"
-PLAY "GGFFEEDP24"
-PLAY "CCGGAAGP24"
-PLAY "FFEEDDC"
-GOTO 100
+twinkle$ = "                                           "
+twinkle$ = twinkle$ + "      C    C    G    G    A    A    G      "
+twinkle$ = twinkle$ + "                                           "
+twinkle$ = twinkle$ + "      F    F    E    E    D    D    C      "
+twinkle$ = twinkle$ + "                                           "
+twinkle$ = twinkle$ + "      G    G    F    F    E    E    D      "
+twinkle$ = twinkle$ + "                                           "
+twinkle$ = twinkle$ + "      G    G    F    F    E    E    D      "
+twinkle$ = twinkle$ + "                                           "
+twinkle$ = twinkle$ + "      C    C    G    G    A    A    G      "
+twinkle$ = twinkle$ + "                                           "
+twinkle$ = twinkle$ + "      F    F    E    E    D    D    C      "
+twinkle$ = twinkle$ + "                                           "
+FOR i = 1 TO LEN(twinkle$)
+        column% = ((i - 1) MOD 43) + 19
+        row% = (i - 1 - ((i - 1) MOD 43)) / 43 + 11
+        LOCATE row%, column%
+        PRINT MID$(twinkle$, i, 1)
+NEXT i
+FOR i = 1 TO LEN(twinkle$)
+        column% = ((i - 1) MOD 43) + 19
+        row% = (i - 1 - ((i - 1) MOD 43)) / 43 + 11
+        note$ = MID$(twinkle$, i, 1)
+        LOCATE row%, column%
+        COLOR 3, 0
+        PRINT note$;
+        IF note$ <> " " THEN
+                LOCATE row%, column%
+                COLOR 31, 0
+                PRINT note$;
+                PLAY "MF" + note$
+                IF cloumn% = 42 THEN
+                        PLAY "P24"
+                END IF
+                LOCATE row%, column%
+                COLOR 15, 0
+                PRINT note$
+        END IF
+NEXT i
+GOTO 20
 
 20
+COLOR 15
+LOCATE 10, 25
+PRINT "        2. Jingle Bells       "
+COLOR 15, 3
 PLAY "EEEP50EEEP50EGCDEP24"
 PLAY "FFFP60FFFP60EEP60EEEP60DDP60EDP50GP24"
 PLAY "EEEP50EEEP50EGCDEP24"
