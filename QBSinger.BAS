@@ -21,7 +21,7 @@ GOTO 10
 COLOR 15
 LOCATE 10, 25
 PRINT "1. Twinkle Twinkle Little Star"
-COLOR 15, 3
+COLOR 15, 0
 twinkle$ = "                                           "
 twinkle$ = twinkle$ + "      C    C    G    G    A    A    G      "
 twinkle$ = twinkle$ + "                                           "
@@ -46,20 +46,25 @@ FOR i = 1 TO LEN(twinkle$)
         row% = (i - 1 - ((i - 1) MOD 43)) / 43 + 11
         note$ = MID$(twinkle$, i, 1)
         LOCATE row%, column%
-        COLOR 3, 0
+        COLOR 15, 3
         PRINT note$;
         IF note$ <> " " THEN
                 LOCATE row%, column%
-                COLOR 31, 0
+                COLOR 31, 3
                 PRINT note$;
-                PLAY "MF" + note$
+                PLAY note$
                 IF cloumn% = 42 THEN
                         PLAY "P24"
                 END IF
                 LOCATE row%, column%
-                COLOR 15, 0
+                COLOR 15, 3
                 PRINT note$
         END IF
+NEXT i
+COLOR 0, 0
+FOR i = 0 TO 12
+        LOCATE i + 11, 19
+        PRINT "                                                   "
 NEXT i
 GOTO 20
 
@@ -67,22 +72,62 @@ GOTO 20
 COLOR 15
 LOCATE 10, 25
 PRINT "        2. Jingle Bells       "
-COLOR 15, 3
-PLAY "EEEP50EEEP50EGCDEP24"
-PLAY "FFFP60FFFP60EEP60EEEP60DDP60EDP50GP24"
-PLAY "EEEP50EEEP50EGCDEP24"
-PLAY "FFFP60FFFP60EEP60EEGP60GFDCP24"
-PLAY "<GEP50DCGP12"
-PLAY "GGGP60EDCAP12"
-PLAY "AFP50EDBP12"
-PLAY "GGP60FDEP12"
-PLAY "GEP50DCGP12"
-PLAY "GGGP60EDCAP12"
-PLAY ">AFP50EDP60GGGP60GGP60AGP60FDCP50G"
-PLAY "EEEP50EEEP50EGCDEP24"
-PLAY "FFFP60FFFP60EEP60EEEP60DDP60EDP50GP24"
-PLAY "EEEP50EEEP50EGCDEP24"
-PLAY "FFFP60FFFP60EEP60EEGP60GFDCP24"
+jingle$ = "                                                   "
+jingle$ = jingle$ + "   E E EP50E E E P50E G C D EP24                   "
+jingle$ = jingle$ + "   F F FP60F F F P60E E P60E E EP60D DP60E DP50GP24"
+jingle$ = jingle$ + "   E E EP50E E E P50E G C D EP24                   "
+jingle$ = jingle$ + "   F F FP60F F FP60E EP60E E GP60G F D CP24        "
+jingle$ = jingle$ + " < G EP50D C GP12  G G GP60E D C AP12              "
+jingle$ = jingle$ + "   A FP50E D B P12 G GP60F D EP12                  "
+jingle$ = jingle$ + "   G EP50D C GP12  G G GP60E D C AP12              "
+jingle$ = jingle$ + " > A FP50E DP60G G GP60G GP60A GP60F D CP50G       "
+jingle$ = jingle$ + "   E E EP50E E EP50E G C D EP24                    "
+jingle$ = jingle$ + "   F F FP60F F FP60E EP60E E EP60D DP60E DP50GP24  "
+jingle$ = jingle$ + "   E E EP50E E EP50E G C D EP24                    "
+jingle$ = jingle$ + "   F F FP60F F FP60E EP60E E GP60G F D CP24        "
+COLOR 15
+FOR i = 1 TO LEN(jingle$)
+        r% = (i - 1) MOD 51
+        column% = r% + 19
+        row% = (i - 1 - r%) / 51 + 11
+        LOCATE row%, column%
+        note$ = MID$(jingle$, i, 1)
+        IF note$ <> "P" THEN
+                PRINT note$
+        ELSE
+                PRINT "   "
+                i = i + 2
+        END IF
+NEXT i
+FOR i = 1 TO LEN(jingle$)
+        r% = (i - 1) MOD 51
+        column% = r% + 19
+        row% = (i - 1 - r%) / 51 + 11
+        LOCATE row%, column%
+        note$ = MID$(jingle$, i, 1)
+        COLOR 15, 6
+        IF note$ <> " " THEN
+                LOCATE row%, column%
+                IF note$ = "P" THEN
+                        PRINT "   ";
+                        i = i + 2
+                ELSE
+                        COLOR 31, 6
+                        PRINT note$;
+                        PLAY note$
+                        LOCATE row%, column%
+                        COLOR 15, 6
+                        PRINT note$;
+                END IF
+        ELSE
+                PRINT note$;
+        END IF
+NEXT i
+COLOR 0, 0
+FOR i = 0 TO 12
+        LOCATE i + 11, 19
+        PRINT "                                                   "
+NEXT i
 GOTO 100
 
 100
