@@ -15,13 +15,13 @@ COLOR 7
 LOCATE 8, 11
 PRINT "I can sing 'Twinkle Twinkle Little Star' & 'Jingle Bells!'"
 PRINT
-GOTO 10
+GOTO 20
 
 10
 COLOR 15
 LOCATE 10, 25
 PRINT "1. Twinkle Twinkle Little Star"
-COLOR 15, 0
+COLOR 15, 3
 twinkle$ = "                                           "
 twinkle$ = twinkle$ + "      C    C    G    G    A    A    G      "
 twinkle$ = twinkle$ + "                                           "
@@ -41,26 +41,31 @@ FOR i = 1 TO LEN(twinkle$)
         LOCATE row%, column%
         PRINT MID$(twinkle$, i, 1)
 NEXT i
+SLEEP 1
 FOR i = 1 TO LEN(twinkle$)
         column% = ((i - 1) MOD 43) + 19
         row% = (i - 1 - ((i - 1) MOD 43)) / 43 + 11
         note$ = MID$(twinkle$, i, 1)
-        LOCATE row%, column%
-        COLOR 15, 3
-        PRINT note$;
         IF note$ <> " " THEN
                 LOCATE row%, column%
-                COLOR 31, 3
+                COLOR 31, 1
                 PRINT note$;
                 PLAY note$
+                start = TIMER
+                DO
+                LOOP UNTIL TIMER > start + .4
                 IF cloumn% = 42 THEN
                         PLAY "P24"
+                        start = TIMER
+                        DO
+                        LOOP UNTIL TIMER > start + .2
                 END IF
                 LOCATE row%, column%
                 COLOR 15, 3
                 PRINT note$
         END IF
 NEXT i
+SLEEP 1
 COLOR 0, 0
 FOR i = 0 TO 12
         LOCATE i + 11, 19
@@ -85,10 +90,10 @@ jingle$ = jingle$ + "   E E EP50E E EP50E G C D EP24                    "
 jingle$ = jingle$ + "   F F FP60F F FP60E EP60E E EP60D DP60E DP50GP24  "
 jingle$ = jingle$ + "   E E EP50E E EP50E G C D EP24                    "
 jingle$ = jingle$ + "   F F FP60F F FP60E EP60E E GP60G F D CP24        "
-COLOR 15
+COLOR 15, 4
 FOR i = 1 TO LEN(jingle$)
         r% = (i - 1) MOD 51
-        column% = r% + 19
+        column% = r% + 16
         row% = (i - 1 - r%) / 51 + 11
         LOCATE row%, column%
         note$ = MID$(jingle$, i, 1)
@@ -99,35 +104,34 @@ FOR i = 1 TO LEN(jingle$)
                 i = i + 2
         END IF
 NEXT i
+SLEEP 1
 FOR i = 1 TO LEN(jingle$)
         r% = (i - 1) MOD 51
-        column% = r% + 19
+        column% = r% + 16
         row% = (i - 1 - r%) / 51 + 11
         LOCATE row%, column%
         note$ = MID$(jingle$, i, 1)
-        COLOR 15, 6
         IF note$ <> " " THEN
-                LOCATE row%, column%
-                IF note$ = "P" THEN
-                        PRINT "   ";
+               IF note$ = "P" THEN
+                        PLAY MID$(jingle$, i, 3)
                         i = i + 2
+                        start = TIMER
+                        DO
+                        LOOP UNTIL TIMER > start + .2
                 ELSE
-                        COLOR 31, 6
+                        COLOR 31, 2
                         PRINT note$;
                         PLAY note$
+                        start = TIMER
+                        DO
+                        LOOP UNTIL TIMER > start + .4
                         LOCATE row%, column%
-                        COLOR 15, 6
+                        COLOR 15, 4
                         PRINT note$;
                 END IF
-        ELSE
-                PRINT note$;
         END IF
 NEXT i
-COLOR 0, 0
-FOR i = 0 TO 12
-        LOCATE i + 11, 19
-        PRINT "                                                   "
-NEXT i
+SLEEP 1
 GOTO 100
 
 100
