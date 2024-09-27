@@ -126,6 +126,22 @@ FOR i = 1 TO LEN(jingle$)
                         start = TIMER
                         DO
                         LOOP UNTIL TIMER > start + .2
+                ELSEIF note$ = "<" OR note$ = ">" THEN
+                        i = i + 2
+                        r% = (i - 1) MOD 51
+                        column% = r% + 14
+                        row% = (i - 1 - r%) / 51 + 11
+                        LOCATE row%, column%
+                        note2$ = MID$(jingle$, i, 1)
+                        COLOR 31, 2
+                        PRINT note2$;
+                        PLAY note$ + note2$
+                        start = TIMER
+                        DO
+                        LOOP UNTIL TIMER > start + .4
+                        LOCATE row%, column%
+                        COLOR 15, 4
+                        PRINT note2$;
                 ELSE
                         COLOR 31, 2
                         PRINT note$;
